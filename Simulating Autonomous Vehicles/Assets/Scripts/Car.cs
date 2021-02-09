@@ -11,6 +11,7 @@ public class Car : MonoBehaviour
     public Transform RearCamera;
     public Transform FrontLeftCamera;
     public Transform FrontRightCamera;
+    public GameObject BrakeLights;
 
     //Stores the info for the raycasts
     RaycastHit forwardHit;
@@ -23,43 +24,147 @@ public class Car : MonoBehaviour
 
     //car variables
     public float carspeed;
+    public float AccelerateSpeed = 2f;
     public float rotatespeed;
     public float cameraDistance;
     bool aboutToCrash = false;
     bool reachedFinish = false;
+    bool carIsTurning = false;
+
+    //used to accelerate and decelerate the vehicle.
+    bool gasPedal = false;
+    float currentSpeed = 0;
+
+    void Start() {
+        
+        gasPedal = true;
+
+    }
 
     private void Update()
     {
-
-        Debug.Log(forwardHit.distance);
-        if (forwardHit.distance <= 1) aboutToCrash = true;
-        else aboutToCrash = false;
-
-        //move the car forward every frame so long as it's not about to crash
-        if (!aboutToCrash) transform.Translate(0, 0, carspeed * Time.deltaTime);
         
-        // **********NEW**************
+        // debug code to help determine the distance of the raycasts 
+        Debug.Log("FORWARD distance: " + forwardHit.distance);
+        Debug.Log("REAR Hit distance: " + rearHit.distance);
+        Debug.Log("LEFT Hit distance: " + leftHit.distance);
+        Debug.Log("RIGHT Hit distance: " + rightHit.distance);
+        Debug.Log("FRONT-LEFT Hit distance: " + frontLeftHit.distance);
+        Debug.Log("FRONT-RIGHT Hit distance: " + frontRightHit.distance);
+        Debug.Log("carIsTurning is " + carIsTurning);
+
+        // If the car is about to crash and/or slow down, turn the brake lights on and then turn them off again after
+        if (forwardHit.distance <= 1) {
+            aboutToCrash = true;
+            // if the car is about to crash and has not completely stopped, turn the brake lights on
+            if(forwardHit.distance != 0) {
+                BrakeLights.SetActive(true);
+            }
+            // if the forward hit is 0 and has completely stopped, turn the brake lights off
+            else {
+                aboutToCrash = false;
+                BrakeLights.SetActive(false);
+            } 
+        }
+        // as long as the car is not about to crash, keep the brake lights off
+        else {
+            aboutToCrash = false;
+            BrakeLights.SetActive(false);
+        }
+
+        //move the car forward every frame so long as it's not about to crash OR if the forward distance is 0 (the raycast hits nothing in front which means it can keep going straight)
+        if (!aboutToCrash || forwardHit.distance == 0)
+        {
+            //Used to accelerate the car.
+            if (currentSpeed < carspeed) currentSpeed += Time.deltaTime * AccelerateSpeed;
+            transform.Translate(0, 0, currentSpeed * Time.deltaTime);
+        }
+            
         // if the car has reached the finish line, stop it from moving
         if(reachedFinish == true) {
             transform.Translate(0, 0, 0);
+            BrakeLights.SetActive(true);
             Debug.Log("Car has stopped moving after reaching finish line!");
         }
-        // **********NEW**************
+
+        //Debug.Log("Carspeed is: " + carspeed);
+
         // this outer if statement controls when the car stops moving. 
         // if the bool flag "reachedFinish" has been set to true in the if statement in FixedUpdate, then don't allow for the car to keep moving.
-        // to revert this change, simply remove the if statement that starts on line 50 and ends on line on 61, and take out the two inner if statements.
+        // to revert this change, simply remove the if statement that starts directly below, and take out the two inner if statements.
         if(reachedFinish == false) {
-            //if left distance is greater than right distance, rotate the car left
-            if (leftHit.distance > rightHit.distance + 4)
+            
+            //if left distance is greater than right distance, rotate the car LEFT
+            if (leftHit.distance > rightHit.distance + 5 && rightHit.distance != 0 && frontLeftHit.distance > frontRightHit.distance + 3 || (forwardHit.distance < 4 && forwardHit.distance != 0))
             {
+                if(leftHit.distance > 25) {
+                    carIsTurning = true;
+                    if(forwardHit.distance < 10) {
+                        transform.Rotate(0,-rotatespeed * Time.deltaTime, 0);
+                        BrakeLights.SetActive(true);
+                        // debug code to know when the car is turning left
+                        Debug.Log("Turning LEFT");
+                        currentSpeed = 4.5F;
+                    }
+                }
+                else {
+                    carIsTurning = false;
+                }
+                if(carIsTurning == false) {
+                    transform.Rotate(0,-rotatespeed * Time.deltaTime, 0);
+                    BrakeLights.SetActive(true);
+                    // debug code to know when the car is turning left
+                    Debug.Log("Turning LEFT");
+                    currentSpeed = 4.5F;
+
+                }
+            }
+            // extra if-case so that when the raycast extends to infinity (aka, hits nothing), it still turns LEFT
+            if(leftHit.distance == 0 || frontLeftHit.distance == 0) {
                 transform.Rotate(0,-rotatespeed * Time.deltaTime, 0);
+                BrakeLights.SetActive(true);
+                // debug code to know when the car is turning left
+                Debug.Log("Turning LEFT");
+                currentSpeed = 4.5F;
             }
-            //if right distance is greater than left distance, rotate the car right
-            if (rightHit.distance > leftHit.distance + 4)
+            //if right distance is greater than left distance, rotate the car RIGHT
+            if (rightHit.distance > leftHit.distance - 3 && leftHit.distance != 0 && frontRightHit.distance > frontLeftHit.distance - 3)
             {
+                if(frontRightHit.distance > 25) {
+                    carIsTurning = true;
+                    if(forwardHit.distance < 10) {
+                        transform.Rotate(0, (rotatespeed + 10) * Time.deltaTime, 0);
+                        BrakeLights.SetActive(true);
+                        // debug code to know when the car is turning right
+                        Debug.Log("Turning RIGHT");
+                        currentSpeed = 4.5F;
+                    }
+                }
+                else {
+                    carIsTurning = false;
+                }
                 transform.Rotate(0, rotatespeed * Time.deltaTime, 0);
+                BrakeLights.SetActive(true);
+                // debug code to know when the car is turning right
+                Debug.Log("Turning RIGHT");
+                currentSpeed = 4.5F;
             }
+            // extra if-case so that when the raycast extends to infinity (aka, hits nothing), it still turns RIGHT
+            if(rightHit.distance == 0 || frontRightHit.distance == 0) {
+                transform.Rotate(0, rotatespeed * Time.deltaTime, 0);
+                BrakeLights.SetActive(true);
+                // debug code to know when the car is turning right
+                Debug.Log("Turning RIGHT");
+                currentSpeed = 4.5F;
+            }
+            //Debug.Log("currentSpeed is: " + currentSpeed);
+            
         }
+        // reverse the car if necessary
+       // if(forwardHit.distance < 0.4) {
+        //    transform.Translate(0, 0, -(carspeed * Time.deltaTime));
+        //}
+
     }
 
     private void FixedUpdate()
@@ -82,7 +187,6 @@ public class Car : MonoBehaviour
         {
             Debug.DrawRay(FrontCamera.transform.position, fwd * forwardHit.distance, Color.red);
 
-            // **********NEW**************
             // this simply checks to see if the car has reached the "finish line" and should stop the car when it reaches it
             // to prevent the console from being spammed after it reaches the finish line, add something like '&& !reachedFinish' to the end of every if statement in FixedUpdate.
             if(forwardHit.collider.gameObject.tag == "finishLine") {
@@ -102,6 +206,7 @@ public class Car : MonoBehaviour
         {
             Debug.DrawRay(RightCamera.transform.position, right * rightHit.distance, Color.red);
             Debug.Log("There is something to the right of the car!");
+            //Debug.Log("it hit: " + rightHit.collider);
         }
         //Behind
         if (Physics.Raycast(RearCamera.transform.position, back, out rearHit, cameraDistance, layerMask))

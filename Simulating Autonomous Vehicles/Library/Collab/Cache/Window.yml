@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SimpleSelectedItems:
     m_Keys:
+    - Assets/Scenes/Windridge City Demo Scene.unity
     - 
-    m_Values: 01
+    m_Values: 0000
   RevisionSummary: 
   ChangesSearchValue: 
   SelectedHistoryRevision: 

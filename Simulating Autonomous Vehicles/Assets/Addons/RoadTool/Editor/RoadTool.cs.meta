@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: 44fc1eb42f65047fa8840d3185497034
+labels:
+- editor
+- ground
+- lowpoly
+- mesh
+- path
+- procedural
+- road
+- tool
+- easy
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
