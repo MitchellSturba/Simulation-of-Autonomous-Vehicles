@@ -8,6 +8,6 @@
 
 ## Overview
 
-A major project for the 4990A course where we simulate autonomous vehicles in the Unity game engine with emphasis on localization 
+A major project for the 4990A course where we simulate autonomous vehicles in the Unity game engine. 
 
-![Image](Screenshots/Screen1.png)
+![gif](Screenshots/gif1.gif)
