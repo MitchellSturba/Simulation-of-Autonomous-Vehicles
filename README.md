@@ -10,4 +10,4 @@
 
 A major project for the 4990A course where we simulate autonomous vehicles in the Unity game engine. 
 
-![gif](Screenshots/gif2.gif)
+![gif](Screenshots/gif1.gif)
