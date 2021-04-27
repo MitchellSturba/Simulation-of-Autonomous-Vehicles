@@ -29,3 +29,8 @@ Navigate to pythontest\reflex_behaviour and run
 In order to train your own model make sure training is flicked on in the upper left corner, then select the folder you'd like to store the images/data in. Next hit the record button and drive around manually collecting data. When finished hit the record button again and the program will save the photos and .csv file in the folder specified. When collecting the data, images are collected from the three cameras mounted on the car's hood and when the model is being trained it is processed and fed through the convolutional neural network to learn how to make predictions in real time. When ready to train, run `python train.py -d <directory>`
 <br><br>
 <img src="https://developer.nvidia.com/blog/parallelforall/wp-content/uploads/2016/08/training-624x291.png" width="50%">
+
+## Data
+The data this model was trained on represents a larger proportion of turns in the road in order to avoid a biased towards always driving straight, however it should be noted that the most common steering angle is still 0 since the vehicle always moves forward and is trained to stay within the lanes as best as possible. The data was gathered from the 'Widridge City' scene by a human controling the car with a keyboard (although a joystick would yeild better results) and frames and steering angles were stored in memory.
+
+img src="Screenshots/SteeringAngles.png" width="50%">
