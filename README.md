@@ -33,4 +33,4 @@ In order to train your own model make sure training is flicked on in the upper l
 ## Data
 The data this model was trained on represents a larger proportion of turns in the road in order to avoid a biased towards always driving straight, however it should be noted that the most common steering angle is still 0 since the vehicle always moves forward and is trained to stay within the lanes as best as possible. The data was gathered from the 'Widridge City' scene by a human controling the car with a keyboard (although a joystick would yeild better results) and frames and steering angles were stored in memory.
 
-img src="Screenshots/SteeringAngles.png" width="50%">
+<img src="Screenshots/SteeringAngles.png" width="70%">
