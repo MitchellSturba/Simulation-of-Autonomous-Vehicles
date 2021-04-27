@@ -21,20 +21,8 @@ public class infopanel : MonoBehaviour
 
     private void LateUpdate()
     {
-        //Setting variables
-        float carspeed = CarScript.carSpeed;
-        float acceleration = CarScript.Acceleration;
-        bool isOn = HeadlightsScript.lightsAreOn;
 
         //setting text
-        Speed.text = (carspeed*18)/5 + " km/h";
-        Acceleration.text = acceleration + " km/h";
-        X.text = CarScript.transform.position.x.ToString("F2");
-        Y.text = CarScript.transform.position.y.ToString("F2");
-        Z.text = CarScript.transform.position.z.ToString("F2");
-        if(isOn == true) Headlights.text = "ON";
-        if(isOn == false) Headlights.text = "OFF";
-        Gas_Pressed.text = CarScript.gasPressed.ToString();
-        Braking.text = CarScript.braking.ToString();
+        
     }
 }

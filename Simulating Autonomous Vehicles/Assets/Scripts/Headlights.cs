@@ -13,6 +13,10 @@ public class Headlights : MonoBehaviour
     void Start()
     {
         Headlight = GetComponent<Light>();
+
+        //Turns lights on/off depending on if the box is checked
+        if (lightsAreOn) Headlight.enabled = true;
+        if (!lightsAreOn) Headlight.enabled = false;
     }
 
     // Update is called once per frame
@@ -21,12 +25,10 @@ public class Headlights : MonoBehaviour
         // if the user presses the '6' key, turn the front headlights OFF.
         if (Input.GetKey(KeyCode.Alpha6)) {
             Headlight.enabled = false;
-            lightsAreOn = false;
         }
         // if the user presses the '7' key, turn the front headlights ON.
         if (Input.GetKey(KeyCode.Alpha7)) {
             Headlight.enabled = true;
-            lightsAreOn = true;
         }
     }
 }

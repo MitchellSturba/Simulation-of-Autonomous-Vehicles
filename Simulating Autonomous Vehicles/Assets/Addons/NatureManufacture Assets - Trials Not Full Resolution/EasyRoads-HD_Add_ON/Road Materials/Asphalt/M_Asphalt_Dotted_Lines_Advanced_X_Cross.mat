@@ -156,7 +156,7 @@ Material:
     - _IgnoreSecondRoadAlpha: 0
     - _MainRoadAlphaCutOut: 1
     - _MainRoadAmbientOcclusionPower: 1
-    - _MainRoadBrightness: 1.5
+    - _MainRoadBrightness: -0.41
     - _MainRoadHeightmapDepth: 1
     - _MainRoadMetalicPower: 1
     - _MainRoadParallaxPower: 0.002

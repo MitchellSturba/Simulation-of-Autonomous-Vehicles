@@ -162,7 +162,10 @@ public class ImageSynthesis : MonoBehaviour {
             case 3:
                 SetupCameraWithReplacementShader(capturePasses[0].camera, uberReplacementShader, ReplacelementModes.Normals);
                 break;
-        }
+			case 4:
+				SetupCameraWithPostShader(capturePasses[5].camera, opticalFlowMaterial, DepthTextureMode.Depth | DepthTextureMode.MotionVectors);
+				break;
+		}
         /*
 		SetupCameraWithReplacementShader(capturePasses[1].camera, uberReplacementShader, ReplacelementModes.ObjectId);
 		SetupCameraWithReplacementShader(capturePasses[2].camera, uberReplacementShader, ReplacelementModes.CatergoryId);
@@ -185,6 +188,10 @@ public class ImageSynthesis : MonoBehaviour {
 			mpb.SetColor("_ObjectColor", ColorEncoding.EncodeIDAsColor(id));
 			mpb.SetColor("_CategoryColor", ColorEncoding.EncodeLayerAsColor(layer));
 			r.SetPropertyBlock(mpb);
+			//Debug.Log("Color is: " + mpb.GetColor("_ObjectColor"));
+			if(mpb.GetColor("_ObjectColor").ToString() == "(0.651, 0.816, 0.318, 1.000)") {
+				Debug.Log("Found a lane stripe");
+			}
 		}
 	}
 
