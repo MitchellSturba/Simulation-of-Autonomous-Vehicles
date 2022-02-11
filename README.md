@@ -14,7 +14,7 @@ A major project for the 4990A course where we simulate autonomous vehicles in th
 ## Demo
 <img src="Screenshots/gif1.gif" width="55%" alt="demo"/>
 <br>
-The gif above shows a short clip of the simulated vehicle driving fully autonomously through a trained model. There are three mounted cameras on the hood of the car that feed images into the model and receives steering predictions and speed/throttle/break instructions in order to safely maneuver around curved roads and remain safely in the lane.
+The gif above shows a short clip of the simulated vehicle driving fully autonomously through a trained model. There are three mounted cameras on the hood of the car that feed images into the model and receives steering predictions and speed/throttle/break  instructions in order to safely maneuver around curved roads and remain safely in the lane.
 
 ## Setup
 Download <a href="https://www.anaconda.com/products/individual">Anaconda</a> <br>
